@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client'
 import { prisma } from '../../lib/prisma.js'
 
 interface GoogleProfile {
@@ -11,11 +12,11 @@ interface GoogleTokens {
   access_token: string
   refresh_token?: string
   expiry_date?: number
-  [key: string]: unknown  // required for Prisma Json field compatibility
 }
 
 export const authService = {
   async upsertGoogleUser(profile: GoogleProfile, tokens: GoogleTokens) {
+    const tokenJson = tokens as unknown as Prisma.InputJsonValue
     return prisma.user.upsert({
       where: { googleId: profile.id },
       create: {
@@ -23,13 +24,12 @@ export const authService = {
         email: profile.email,
         name: profile.name,
         avatarUrl: profile.picture,
-        googleTokens: tokens,
+        googleTokens: tokenJson,
       },
       update: {
         name: profile.name,
         avatarUrl: profile.picture,
-        googleTokens: tokens,
-        // Always refresh stored tokens
+        googleTokens: tokenJson,
       },
     })
   },
