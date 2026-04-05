@@ -11,6 +11,7 @@ interface GoogleTokens {
   access_token: string
   refresh_token?: string
   expiry_date?: number
+  [key: string]: unknown  // required for Prisma Json field compatibility
 }
 
 export const authService = {

@@ -115,7 +115,7 @@ export const financialsService = {
     const totalPaid =
       invoice.payments.reduce((s, p) => s + Number(p.amount), 0) + data.amount
 
-    let newStatus = InvoiceStatus.PARTIAL
+    let newStatus: InvoiceStatus = InvoiceStatus.PARTIAL
     if (totalPaid >= totals.total) newStatus = InvoiceStatus.PAID
 
     await prisma.invoice.update({ where: { id: invoiceId }, data: { status: newStatus } })

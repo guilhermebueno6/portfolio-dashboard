@@ -57,6 +57,7 @@ export async function wsRoutes(app: FastifyInstance): Promise<void> {
       const token =
         (request.query as Record<string, string>).token ||
         request.cookies?.auth_token
+      if (!token) throw new Error('No token')
       const decoded = app.jwt.verify<{ id: string }>(token)
       userId = decoded.id
     } catch {
@@ -68,7 +69,7 @@ export async function wsRoutes(app: FastifyInstance): Promise<void> {
     clients.set(clientId, { ws: socket, userId, subscriptions: new Set() })
     socket.send(JSON.stringify({ type: 'connected', userId }))
 
-    socket.on('message', (raw) => {
+    socket.on('message', (raw: Buffer) => {
       try {
         const msg = JSON.parse(raw.toString()) as WsEvent
         if (msg.type === 'ping') {
