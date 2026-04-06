@@ -9,7 +9,7 @@ const CreateTaskSchema = z.object({
   description: z.string().optional(),
   status: z.enum(['TODO', 'IN_PROGRESS', 'DONE', 'ARCHIVED']).optional(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']).optional(),
-  dueDate: z.string().datetime().optional(),
+  dueDate: z.string().optional(),  // accepts "2026-04-10" or full ISO datetime
   tags: z.array(z.string()).optional(),
 })
 
