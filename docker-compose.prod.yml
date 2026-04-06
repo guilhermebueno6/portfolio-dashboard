@@ -1,26 +1,5 @@
-# Production overrides — use with:
-# docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-
-services:
-  postgres:
-    ports: []  # Not exposed — host Nginx talks to containers via Docker network
-
-  redis:
-    ports: []  # Not exposed
-
-  backend:
-    build:
-      target: production
-    command: node dist/index.js
-    environment:
-      - NODE_ENV=production
-    volumes: []  # No bind mounts in production
-
-  frontend:
-    build:
-      target: production
-    command: node .output/server/index.mjs
-    volumes: []
-    environment:
-      - NUXT_PUBLIC_API_BASE=https://dashboard.yourdomain.com
-      - NUXT_PUBLIC_WS_URL=wss://dashboard.yourdomain.com
+# This file is intentionally minimal.
+# docker-compose.yml already targets the production build stage directly.
+# Use: docker compose up -d --build
+#
+# (No overrides needed — base file is production-ready.)

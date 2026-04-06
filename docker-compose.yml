@@ -36,7 +36,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-      target: development
+      target: production
     container_name: dashboard_backend
     restart: unless-stopped
     env_file:
@@ -44,10 +44,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-dashboard}:${POSTGRES_PASSWORD:-secret}@postgres:5432/${POSTGRES_DB:-dashboard}
       - REDIS_URL=redis://:${REDIS_PASSWORD:-redissecret}@redis:6379
-      - NODE_ENV=development
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
+      - NODE_ENV=production
     ports:
       - '3001:3001'
     depends_on:
@@ -57,31 +54,25 @@ services:
         condition: service_healthy
     networks:
       - dashboard_net
-    command: npm run dev
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      target: development
+      target: production
     container_name: dashboard_frontend
     restart: unless-stopped
     env_file:
       - ./frontend/.env
     environment:
-      - NUXT_PUBLIC_API_BASE=http://localhost:3001
-      - NUXT_PUBLIC_WS_URL=ws://localhost:3001
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.nuxt
+      - NUXT_PUBLIC_API_BASE=https://dashboard.guizon.com.br
+      - NUXT_PUBLIC_WS_URL=wss://dashboard.guizon.com.br
     ports:
       - '3000:3000'
     depends_on:
       - backend
     networks:
       - dashboard_net
-    command: npm run dev
 
 volumes:
   postgres_data:
