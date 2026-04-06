@@ -14,6 +14,13 @@ export default defineNuxtConfig({
     icons: ['heroicons', 'lucide'],
   },
 
+  // Bundle icon collections from local @iconify-json packages (avoids CDN fetches)
+  icon: {
+    serverBundle: {
+      collections: ['heroicons', 'lucide'],
+    },
+  },
+
   colorMode: {
     classSuffix: '',
     preference: 'system',

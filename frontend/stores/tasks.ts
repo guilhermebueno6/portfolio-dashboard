@@ -33,7 +33,10 @@ export const useTasksStore = defineStore('tasks', () => {
       method: 'POST',
       body: payload,
     })
-    tasks.value.unshift(task)
+    // Guard against race condition: WS event may have already added the task
+    if (!tasks.value.some((t) => t.id === task.id)) {
+      tasks.value.unshift(task)
+    }
     return task
   }
 
