@@ -2,11 +2,11 @@
 const { user, isAuthenticated, logout } = useAuth()
 const colorMode = useColorMode()
 
-const navigation = [
+const navigation: { label: string; icon: string; to: string; external?: boolean }[] = [
   { label: 'Dashboard', icon: 'i-heroicons-squares-2x2', to: '/' },
   { label: 'Tasks', icon: 'i-heroicons-check-circle', to: '/tasks' },
   { label: 'Notes', icon: 'i-heroicons-document-text', to: '/notes' },
-  { label: 'Financials', icon: 'i-heroicons-banknotes', to: '/financials' },
+  { label: 'Financials', icon: 'i-heroicons-banknotes', to: 'https://financial.guizon.com.br', external: true },
 ]
 
 const isSidebarOpen = ref(false)
@@ -49,13 +49,16 @@ watch(() => route.path, () => { isSidebarOpen.value = false })
           v-for="item in navigation"
           :key="item.to"
           :to="item.to"
+          :external="item.external"
+          :target="item.external ? '_blank' : undefined"
           class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
-          :class="route.path === item.to
+          :class="!item.external && route.path === item.to
             ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
             : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
         >
           <UIcon :name="item.icon" class="h-5 w-5 flex-shrink-0" />
           {{ item.label }}
+          <UIcon v-if="item.external" name="i-heroicons-arrow-top-right-on-square" class="h-3 w-3 ml-auto opacity-40" />
         </NuxtLink>
       </nav>
 

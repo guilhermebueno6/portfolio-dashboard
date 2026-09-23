@@ -19,6 +19,10 @@ export default defineNuxtConfig({
     serverBundle: {
       collections: ['heroicons', 'lucide'],
     },
+    // Scan .vue files and bundle every used icon into the client JS (no API calls)
+    clientBundle: {
+      scan: true,
+    },
   },
 
   colorMode: {
@@ -39,7 +43,9 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    // API routes proxied to backend (avoids CORS in production)
+    // Nuxt icon API must NOT be proxied to the backend — handle it locally
+    '/api/_nuxt_icon/**': {},
+    // All other API routes proxied to backend (avoids CORS in production)
     '/api/**': { proxy: { to: process.env.NUXT_PUBLIC_API_BASE + '/**' } },
   },
 
