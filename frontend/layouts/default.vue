@@ -6,7 +6,7 @@ const navigation: { label: string; icon: string; to: string; external?: boolean 
   { label: 'Dashboard', icon: 'i-heroicons-squares-2x2', to: '/' },
   { label: 'Tasks', icon: 'i-heroicons-check-circle', to: '/tasks' },
   { label: 'Notes', icon: 'i-heroicons-document-text', to: '/notes' },
-  { label: 'Financials', icon: 'i-heroicons-banknotes', to: 'https://financial.guizon.com.br', external: true },
+  { label: 'Financials', icon: 'i-heroicons-banknotes', to: 'https://finance.guizon.com.br', external: true },
 ]
 
 const isSidebarOpen = ref(false)
