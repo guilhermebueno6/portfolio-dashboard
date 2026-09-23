@@ -10,7 +10,6 @@ import { redis } from './lib/redis.js'
 import { authRoutes } from './modules/auth/auth.routes.js'
 import { tasksRoutes } from './modules/tasks/tasks.routes.js'
 import { notesRoutes } from './modules/notes/notes.routes.js'
-import { financialsRoutes } from './modules/financials/financials.routes.js'
 import { calendarRoutes } from './modules/calendar/calendar.routes.js'
 import { feedsRoutes } from './modules/feeds/feeds.routes.js'
 import { wsRoutes } from './lib/socket.js'
@@ -66,7 +65,6 @@ export async function buildApp(): Promise<FastifyInstance> {
   await app.register(authRoutes, { prefix: '/api/auth' })
   await app.register(tasksRoutes, { prefix: '/api/tasks' })
   await app.register(notesRoutes, { prefix: '/api/notes' })
-  await app.register(financialsRoutes, { prefix: '/api/financials' })
   await app.register(calendarRoutes, { prefix: '/api/calendar' })
   await app.register(feedsRoutes, { prefix: '/api/feeds' })
   await app.register(wsRoutes)  // WebSocket hub at /ws

@@ -50,52 +50,6 @@ export interface Note {
   updatedAt: string
 }
 
-// ─── Financials ───────────────────────────────────────────────────────────────
-
-export type InvoiceStatus = 'DRAFT' | 'SENT' | 'PARTIAL' | 'PAID' | 'OVERDUE' | 'CANCELLED'
-export type PaymentMethod = 'BANK_TRANSFER' | 'CREDIT_CARD' | 'PAYPAL' | 'CRYPTO' | 'CASH' | 'OTHER'
-
-export interface LineItem {
-  id: string
-  description: string
-  quantity: number
-  unitPrice: number
-  taxRate: number
-}
-
-export interface Payment {
-  id: string
-  amount: number
-  method: PaymentMethod
-  paidAt: string
-  notes: string | null
-}
-
-export interface Invoice {
-  id: string
-  invoiceNumber: string
-  clientName: string
-  clientEmail: string | null
-  clientAddress: string | null
-  issueDate: string
-  dueDate: string
-  status: InvoiceStatus
-  currency: string
-  notes: string | null
-  lineItems: LineItem[]
-  payments: Payment[]
-  totals?: { subtotal: number; taxTotal: number; total: number }
-  paid?: number
-  outstanding?: number
-}
-
-export interface FinancialSummary {
-  totalBilled: number
-  totalPaid: number
-  totalOutstanding: number
-  invoiceCount: number
-}
-
 // ─── Calendar ─────────────────────────────────────────────────────────────────
 
 export interface CalendarEvent {
